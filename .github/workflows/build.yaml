@@ -39,6 +39,5 @@ jobs:
         with:
           name: ${{ matrix.os }}-executable
           path: hello${{ matrix.ext }}
-          retention-days: 1
       - name: Test
         run: ./hello${{ matrix.ext }}
