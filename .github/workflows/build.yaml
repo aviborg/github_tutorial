@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Build the windows files
         run: |
-          g++-mingw-w64 -static-libstdc++ hello.cpp -o hello.exe
+          g++ -static-libstdc++ hello.cpp -o hello.exe
       - uses: actions/upload-artifact@v4
         with:
           name: windows-executable
