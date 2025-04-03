@@ -1,31 +1,24 @@
-name: Build 
+name: Build
 on: [push]
 jobs:
-  Build_Cpp_linux:
-    name: Build C++ Linux
-    runs-on: ubuntu-latest
+  example_matrix:
+    strategy:
+      matrix:
+        os: [windows, ubuntu, macos]
+        include:
+          - os: windows
+            ext: .exe
+          - os: macos
+            ext: .app
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Build the files
         run: |
-          g++ hello.cpp -o hello
+          g++ hello.cpp -o hello${{ matrix.include.ext }}
       - uses: actions/upload-artifact@v4
         with:
-          name: linux-executable
-          path: hello
-          retention-days: 1
-  Build_Cpp_windows:
-    name: Build C++ Windows
-    runs-on: windows-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: Build the files
-        run: |
-          g++ hello.cpp -o hello.exe
-      - uses: actions/upload-artifact@v4
-        with:
-          name: eindows-executable
-          path: hello.exe
+          name: ${{ matrix.os }}-executable
+          path: hello${{ matrix.include.ext }}
           retention-days: 1
