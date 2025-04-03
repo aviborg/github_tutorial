@@ -1,18 +1,12 @@
 name: Build 
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
-  Build_cpp:
-    name: Build C++
+  Build_Cpp_linux:
+    name: Build C++ Linux
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: Build the files
         run: |
           g++ hello.cpp -o hello
@@ -21,4 +15,17 @@ jobs:
           name: linux-executable
           path: hello
           retention-days: 1
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+  Build_Cpp_windows:
+    name: Build C++ Windows
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build the files
+        run: |
+          g++ hello.cpp -o hello.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: eindows-executable
+          path: hello.exe
+          retention-days: 1
