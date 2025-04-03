@@ -32,6 +32,7 @@ jobs:
           - os: macos
             ext: .app
     runs-on: ${{ matrix.os }}-latest
+    needs: build
     steps:
       - name: Download artifact
         uses: actions/sownload-artifact@v4
