@@ -1,7 +1,7 @@
 name: Build
 on: [push]
 jobs:
-  example_matrix:
+  build:
     strategy:
       matrix:
         os: [windows, ubuntu, macos]
@@ -22,3 +22,22 @@ jobs:
           name: ${{ matrix.os }}-executable
           path: hello${{ matrix.ext }}
           retention-days: 1
+  test:
+    strategy:
+      matrix:
+        os: [windows, ubuntu, macos]
+        include:
+          - os: windows
+            ext: .exe
+          - os: macos
+            ext: .app
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - name: Download artifact
+        uses: actions/sownload-artifact@v4
+        with:
+          name: ${{ matrix.os }}-executable
+          path: hello${{ matrix.ext }}
+          retention-days: 1
+      - name: Test
+        run: ./hello${{ matrix.ext }}
