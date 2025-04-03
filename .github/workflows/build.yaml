@@ -39,4 +39,6 @@ jobs:
         with:
           name: ${{ matrix.os }}-executable
       - name: Test
-        run: ./hello${{ matrix.ext }}
+        run: |
+          chmod 755 ./hello${{ matrix.ext }}
+          ./hello${{ matrix.ext }}
