@@ -35,6 +35,11 @@ jobs:
        uses: actions/checkout@v4
      - name: Build the file
        run: g++ hello.cpp -o hello
+     - uses: actions/upload-artifact@v4
+       with:
+         name: ubuntu-executable
+         path: hello
+         retention-days: 1
 ```
 
 
